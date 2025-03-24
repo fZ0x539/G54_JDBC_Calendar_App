@@ -52,7 +52,7 @@ public class Person {
         }
         EmailValidator validator = EmailValidator.getInstance();
         if(validator.isValid(email))
-            this.email = email;
+            this.email = email.toLowerCase();
         else{
             throw new IllegalArgumentException("Invalid email address: " + email);
         }

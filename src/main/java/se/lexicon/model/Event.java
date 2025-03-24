@@ -5,21 +5,21 @@ import java.util.Objects;
 
 public class Event {
     private int id;
-    private int calendar_id;
     private String title;
     private String description;
     private LocalDateTime date_time;
+    private MyCalendar calendar;
 
-    public Event(int calendar_id, String title, String description, LocalDateTime date_time) {
-        setCalendar_id(calendar_id);
+    public Event(String title, String description, LocalDateTime date_time, MyCalendar calendar) {
         setTitle(title);
         setDescription(description);
         setDate_time(date_time);
+        setCalendar(calendar);
     }
 
-    public Event(int id, int calendar_id, String title, String description, LocalDateTime date_time) {
-        this(calendar_id, title, description, date_time);
-        this.id = id;
+    public Event(int id, String title, String description, LocalDateTime date_time, MyCalendar calendar) {
+        this(title, description, date_time, calendar);
+        setId(id);
     }
 
     public int getId() {
@@ -30,12 +30,12 @@ public class Event {
         this.id = id;
     }
 
-    public int getCalendar_id() {
-        return calendar_id;
+    public MyCalendar getCalendar() {
+        return calendar;
     }
 
-    public void setCalendar_id(int calendar_id) {
-        this.calendar_id = calendar_id;
+    public void setCalendar(MyCalendar calendar) {
+        this.calendar = calendar;
     }
 
     public String getTitle() {
@@ -67,14 +67,15 @@ public class Event {
         this.date_time = date_time;
     }
 
+
     @Override
     public String toString() {
         return "Event{" +
                 "id=" + id +
-                ", calendar_id=" + calendar_id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", date_time=" + date_time +
+                ", calendar=" + calendar +
                 '}';
     }
 }

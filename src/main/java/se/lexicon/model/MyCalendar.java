@@ -5,19 +5,19 @@ import java.util.Objects;
 
 public class MyCalendar {
     private int id;
-    private int person_id;
     private String name;
     private String description;
+    private Person person;
 
 
-    public MyCalendar(int person_id, String name, String description) {
-        setPerson_id(person_id);
+    public MyCalendar(String name, String description, Person person) {
         setName(name);
         setDescription(description);
+        setPerson(person);
     }
 
-    public MyCalendar(int id, int person_id, String name, String description) {
-        this(person_id, name, description);
+    public MyCalendar(int id, String name, String description, Person person) {
+        this(name, description, person);
         setId(id);
     }
 
@@ -29,12 +29,16 @@ public class MyCalendar {
         this.id = id;
     }
 
-    public int getPerson_id() {
-        return person_id;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPerson_id(int person_id) {
-        this.person_id = person_id;
+    public void setPerson(Person person) {
+        Objects.requireNonNull(person);
+        if(person.getId() == 0){
+            throw new IllegalArgumentException("Error MyCalendar.setPerson(): Person ID must be set.");
+        }
+        this.person = person;
     }
 
     public String getName() {
@@ -61,9 +65,9 @@ public class MyCalendar {
     public String toString() {
         return "MyCalendar{" +
                 "id=" + id +
-                ", person_id=" + person_id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", person=" + person +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package se.lexicon.dao.impl;
 
 import se.lexicon.dao.PersonDAO;
 import se.lexicon.model.Person;
+import se.lexicon.view.ConsoleUI;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +27,7 @@ public class PersonDAOImpl implements PersonDAO {
 
             int rows = preparedStatement.executeUpdate();
             if (rows > 0) {
-                System.out.println(person.getName() + " has been added to the DB.");
+                ConsoleUI.printSuccess(person.getName() + " has been added to the DB.");
                 try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
                     if (rs.next()) {
                         person.setId(rs.getInt(1));
@@ -73,9 +74,9 @@ public class PersonDAOImpl implements PersonDAO {
 
             int rows = preparedStatement.executeUpdate();
             if (rows > 0) {
-                System.out.println("Successfully updated Person with ID " + person.getId());
+                ConsoleUI.printSuccess("Successfully updated Person with ID " + person.getId());
             } else {
-                System.out.println("Couldn't find person with ID" + person.getId());
+                ConsoleUI.printError("Couldn't find person with ID" + person.getId());
             }
 
 
@@ -90,12 +91,13 @@ public class PersonDAOImpl implements PersonDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             int rows = preparedStatement.executeUpdate();
-            if (rows > 0) {
-                System.out.println("Successfully deleted person with ID " + id);
-            }
+            if (rows > 0)
+                ConsoleUI.printWarn("Successfully deleted person with ID " + id);
+             else
+                ConsoleUI.printError("Couldn't find person with ID " + id);
         } catch (SQLException e) {
-            System.err.println("Error in PeopleDao.deleteById() " + e.getMessage());
+            System.err.println("Error in PeopleDao.delete() " + e.getMessage());
         }
-        System.out.println("Couldn't find person with ID " + id);
+
     }
 }
